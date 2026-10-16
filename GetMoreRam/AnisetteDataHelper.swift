@@ -313,7 +313,7 @@ final class AnisetteDataHelper
     
     func buildAppleRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
-        request.setValue(self.clientInfo!, forHTTPHeaderField: "X-Mme-Client-Info")
+        request.setValue(self.Info!, forHTTPHeaderField: "X-Mme--Info")
         request.setValue(self.userAgent!, forHTTPHeaderField: "User-Agent")
         request.setValue("text/x-xml-plist", forHTTPHeaderField: "Content-Type")
         request.setValue("*/*", forHTTPHeaderField: "Accept")
@@ -327,7 +327,7 @@ final class AnisetteDataHelper
         formatter.timeZone = TimeZone(identifier: "UTC")
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         let dateString = formatter.string(from: Date())
-        request.setValue(dateString, forHTTPHeaderField: "X-Apple-I-Client-Time")
+        request.setValue(dateString, forHTTPHeaderField: "X-Apple-I--Time")
         request.setValue(Locale.current.identifier, forHTTPHeaderField: "X-Apple-Locale")
         request.setValue(TimeZone.current.abbreviation(), forHTTPHeaderField: "X-Apple-I-TimeZone")
         return request
@@ -335,20 +335,20 @@ final class AnisetteDataHelper
     
     // MARK: - V3: FETCHING
     
-    func fetchClientInfo() async throws {
-        if  self.clientInfo != nil &&
+    func fetchInfo() async throws {
+        if  self.Info != nil &&
                 self.userAgent != nil &&
                 self.mdLu != nil &&
                 self.deviceId != nil &&
                 Keychain.shared.identifier != nil {
-            self.printOut("Skipping client_info fetch since all the properties we need aren't nil")
+            self.printOut("Skipping _info fetch since all the properties we need aren't nil")
             return
         }
         
-        self.printOut("Using custom client_info")
+        self.printOut("Using custom _info")
                         
-        self.clientInfo = "<iMac18,3> <macOS;27.0;26A5378j> <com.apple.AuthKit/1 (com.apple.akd/1.0)>"
-        self.userAgent = "AuthKit/1 (Macintosh; OS X 27.0) (com.apple.akd/1.0)"
+        self.clientInfo = "<PC> <Windows;6.2(0,0);9200> <com.apple.AuthKit/1 (com.apple.iTunes/12.12.4.1)>"
+        self.userAgent = "akd/1.0 CFNetwork/808.1.4"
         self.printOut("Client-Info: \(self.clientInfo!)")
         self.printOut("User-Agent: \(self.userAgent!)")
         
