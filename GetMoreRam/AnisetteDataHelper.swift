@@ -313,7 +313,7 @@ final class AnisetteDataHelper
     
     func buildAppleRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
-        request.setValue(self.Info!, forHTTPHeaderField: "X-Mme--Info")
+        request.setValue(self.clientInfo!, forHTTPHeaderField: "X-Mme--Info")
         request.setValue(self.userAgent!, forHTTPHeaderField: "User-Agent")
         request.setValue("text/x-xml-plist", forHTTPHeaderField: "Content-Type")
         request.setValue("*/*", forHTTPHeaderField: "Accept")
@@ -336,7 +336,7 @@ final class AnisetteDataHelper
     // MARK: - V3: FETCHING
     
     func fetchInfo() async throws {
-        if  self.Info != nil &&
+        if  self.clientInfo != nil &&
                 self.userAgent != nil &&
                 self.mdLu != nil &&
                 self.deviceId != nil &&
